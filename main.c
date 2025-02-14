@@ -16,7 +16,9 @@ int main () {
 
 	// strtok_r returns NULL when there are no more tokens
 	while ((token = strtok_r(remainder, " ", &remainder)) != NULL) {
-		printf("%s \n", token);
+		if (strcmp(token, "exit") == 0) {
+
+		}
 	}
 
 
