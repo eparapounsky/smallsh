@@ -1,0 +1,20 @@
+#include <stdio.h> // for printf
+#include <string.h> // for strtok_r
+#include <stdbool.h> // for true/false
+#include <stdlib.h> // for calloc
+
+// macros
+#define COMMAND_LINE_SIZE 2048
+#define MAX_ARGS 512
+
+// function prototypes
+int exit_program();
+
+// structs
+struct user_command {
+	char* argv[MAX_ARGS +1]; // array holding arguments
+	int argc; // number of arguments
+	char* input_file;
+	char* output_file;
+	bool is_background_process;
+};
