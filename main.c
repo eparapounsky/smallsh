@@ -1,4 +1,4 @@
-#include <main.h>
+#include "main.h" // double quotes for local header files
 
 int main () {
 	struct user_command* current_command;
