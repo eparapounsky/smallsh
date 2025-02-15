@@ -21,7 +21,7 @@ struct user_command {
 
 struct user_command* parse_command() {
 	char user_input[COMMAND_LINE_SIZE];
-	struct user_command* current_command = (struct command_line*) calloc(1, sizeof(struct user_command));
+	struct user_command* current_command = (struct user_command*) calloc(1, sizeof(struct user_command));
 
 	// get user's command
 	printf(": ");
@@ -42,6 +42,7 @@ struct user_command* parse_command() {
 		} else if (strcmp(token, "&") == 0) { // if user specified to run process in background
 			current_command->is_background_process = true;
 		} else { // user specified an argument
+			// add argument to array and increment argument count
 			current_command->argv[current_command->argc++] = strdup(token);
 		}
 	}
@@ -49,11 +50,31 @@ struct user_command* parse_command() {
 	return current_command;
 }
 
+void free_command_memory(struct user_command* command) {
+    // free each argument in argv array
+    for (int i = 0; i < command->argc; i++) {
+        free(command->argv[i]);
+    }
+
+    // free input/output files if needed
+    if (command->input_file) {
+        free(command->input_file);
+    }
+    if (command->output_file) {
+        free(command->output_file);
+    }
+
+    // free the user command struct
+    free(command);
+}
+
 int main () {
 	struct user_command* current_command;
 
 	while (true) {
 		current_command = parse_command();
+
+		free_command_memory(current_command);
 	}
 	return 0;
 }
