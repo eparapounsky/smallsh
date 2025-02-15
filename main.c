@@ -1,23 +1,15 @@
-#include <stdio.h> // for printf
-#include <string.h> // for strtok_r
-#include <stdbool.h> // for true/false
-#include <stdlib.h> // for calloc
+#include <main.h>
 
-// macros
-#define COMMAND_LINE_SIZE 2048
-#define MAX_ARGS 512
+int main () {
+	struct user_command* current_command;
 
-// function prototypes
-int exit_program();
+	while (true) {
+		current_command = parse_command();
 
-// structs
-struct user_command {
-	char* argv[MAX_ARGS +1]; // array holding arguments
-	int argc; // number of arguments
-	char* input_file;
-	char* output_file;
-	bool is_background_process;
-};
+		free_command_memory(current_command);
+	}
+	return 0;
+}
 
 // adapted from sample parser code
 struct user_command* parse_command() {
@@ -81,17 +73,4 @@ void free_command_memory(struct user_command* command) {
     free(command);
 }
 
-int main () {
-	struct user_command* current_command;
 
-	while (true) {
-		current_command = parse_command();
-
-		free_command_memory(current_command);
-	}
-	return 0;
-}
-
-int exit_program() {
-	return 0;
-}

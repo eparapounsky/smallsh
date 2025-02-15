@@ -8,7 +8,8 @@
 #define MAX_ARGS 512
 
 // function prototypes
-int exit_program();
+struct user_command* parse_command();
+void free_command_memory(struct user_command* command);
 
 // structs
 struct user_command {
