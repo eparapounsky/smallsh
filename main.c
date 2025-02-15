@@ -19,6 +19,7 @@ struct user_command {
 	bool is_background_process;
 };
 
+// adapted from sample parser code
 struct user_command* parse_command() {
 	char user_input[COMMAND_LINE_SIZE];
 	struct user_command* current_command = (struct user_command*) calloc(1, sizeof(struct user_command));
@@ -28,13 +29,20 @@ struct user_command* parse_command() {
 	fflush(stdout); // flush output to display prompt
 	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
 
+	// check for blank lines
+	if (strlen(user_input) == 0) {
+		return 0;
+	}
+
 	// parse user's command
 	char* token = NULL;
 	char* remainder = user_input;
 
 	// strtok_r returns NULL when there are no more tokens
 	while ((token = strtok_r(remainder, " \n", &remainder)) != NULL) {
-		if(strcmp(token, "<") == 0) { // if user specified input file
+		if (strcmp(token, "#") == 0) { // if user entered a comment
+			return 0;
+		} else if (strcmp(token, "<") == 0) { // if user specified input file
 			// dynamically allocate memory and save file name
 			current_command->input_file = strdup(strtok_r(remainder, " \n", &remainder));
 		} else if (strcmp(token, ">") == 0) { // if user specified output file
@@ -51,7 +59,12 @@ struct user_command* parse_command() {
 }
 
 void free_command_memory(struct user_command* command) {
-    // free each argument in argv array
+    // check that command was created
+	if (!command) {
+		return;
+	}
+
+	// free each argument in argv array
     for (int i = 0; i < command->argc; i++) {
         free(command->argv[i]);
     }
