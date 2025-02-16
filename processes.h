@@ -1,5 +1,6 @@
 #include <sys/types.h> // for pid_t
-#include <stdio.h>
+#include <stdio.h> // for printf
+#include <signal.h> // for signals
 
 // macros
 #define BACKGROUND_PROCESS_LIMIT 200
