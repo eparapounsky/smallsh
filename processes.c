@@ -1,11 +1,21 @@
 #include "processes.h"
 
-
-
+// global variables
 pid_t background_processes[BACKGROUND_PROCESS_LIMIT]; // array holding PIDs of still incomplete background processes
 int num_background_processes = 0;
 
-void add_process() {}
+/**
+ * Adds a process's PID to the tracking array
+ * @param pid_t the process's PID
+*/
+void add_process(pid_t pid) {
+	if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {
+		background_processes[num_background_processes] = pid;
+	} else {
+		printf("ERROR: Background process limit reached.");
+		fflush(stdout);
+	}
+}
 
 void terminate_processes() {}
 
