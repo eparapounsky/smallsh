@@ -25,4 +25,5 @@ void terminate_processes() {
 	for (int i = 0; i < num_background_processes; i++) {
 		kill(background_processes[i], SIGTERM);
 	}
+	num_background_processes = 0; // reset tracker
 }
