@@ -11,12 +11,16 @@ int num_background_processes = 0;
 void add_process(pid_t pid) {
 	if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {
 		background_processes[num_background_processes] = pid;
+		num_background_processes++;
 	} else {
 		printf("ERROR: Background process limit reached.");
 		fflush(stdout);
 	}
 }
 
-void terminate_processes() {}
+/**
+ * Terminates all background processes
+*/
+void terminate_processes() {
 
-
+}
