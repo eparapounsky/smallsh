@@ -1,4 +1,6 @@
 #include "main.h" // double quotes for local header files
+#include "processes.h"
+#include "commands.h"
 
 int main () {
 	struct user_command* current_command;
@@ -41,6 +43,8 @@ struct user_command* parse_command() {
 			current_command->output_file = strdup(strtok_r(remainder, " \n", &remainder));
 		} else if (strcmp(token, "&") == 0) { // if user specified to run process in background
 			current_command->is_background_process = true;
+		} else if (strcmp(token, "exit") == 0) {
+			exit_program();
 		} else { // user specified an argument
 			// add argument to array and increment argument count
 			current_command->argv[current_command->argc++] = strdup(token);
