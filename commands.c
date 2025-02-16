@@ -1,7 +1,9 @@
 #include "commands.h"
 #include "processes.h"
 
-// built-in exit command
+/**
+ * Calls the termination function from processes.c and exits.
+ */
 void exit_program() {
 	terminate_processes();
 	exit(0);
