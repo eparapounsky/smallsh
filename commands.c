@@ -9,8 +9,17 @@ void exit_program() {
 	exit(0);
 }
 
-// built in cd command
-//void change_directory() {}
+/**
+ * Changes the working directory of the shell to the specified path.
+ */
+void change_directory(char* pathname) {
+	// check if no arguments
+	if (pathname == NULL) {
+		pathname = getenv("HOME"); // set to directory in HOME environment variable
+	}
+
+	chdir(pathname);
+}
 
 // built in status command
 //int print_status() {}

@@ -8,6 +8,15 @@ int main () {
 	while (true) {
 		current_command = parse_command();
 
+		// handle built in commands
+		if (strcmp(current_command->argv[0], "exit") == 0) {
+			exit_program();
+		}
+
+		if (strcmp(current_command->argv[0], "cd") == 0) {
+			change_directory(current_command->argv[1]);
+		}
+
 		free_command_memory(current_command);
 	}
 	return 0;
@@ -43,8 +52,6 @@ struct user_command* parse_command() {
 			current_command->output_file = strdup(strtok_r(remainder, " \n", &remainder));
 		} else if (strcmp(token, "&") == 0) { // if user specified to run process in background
 			current_command->is_background_process = true;
-		} else if (strcmp(token, "exit") == 0) {
-			exit_program();
 		} else { // user specified an argument
 			// add argument to array and increment argument count
 			current_command->argv[current_command->argc++] = strdup(token);
