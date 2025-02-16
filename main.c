@@ -8,6 +8,13 @@ int main () {
 	while (true) {
 		current_command = parse_command();
 
+		// print argv for debugging
+		printf("\n current command arguments:\n");
+		for (int i = 0; current_command->argv[i] != NULL; i++) {
+		    printf("argv[%d]: %s\n", i, current_command->argv[i]);
+		}
+		fflush(stdout);
+
 		// handle built in commands
 		if (strcmp(current_command->argv[0], "exit") == 0) {
 			exit_program();
