@@ -1,7 +1,5 @@
 #include "commands.h"
 #include "processes.h"
-#include <errno.h>
-#include <string.h>
 
 /**
  * Calls the termination function from processes.c and exits.
@@ -16,25 +14,25 @@ void exit_program() {
  */
 void change_directory(char* pathname) {
 	// check if no arguments
-	char* homeDir = pathname;
-	if (homeDir == NULL) {
-		homeDir = getenv("HOME"); // set to directory in HOME environment variable
-		printf("HOME: %s\n", homeDir);
+	char* buffer = pathname;
+
+	if (buffer == NULL) {
+		buffer = getenv("HOME"); // set to directory in HOME environment variable
 	}
 
-	char temp_pathname[512];
+//	char temp_pathname[512];
+//
+//	if (getcwd(temp_pathname, sizeof(temp_pathname)) != NULL) {
+//		printf("before changing directory: %s\n", temp_pathname);
+//	} else {
+//		printf("Error: %s\n", strerror(errno));
+//	}
 
-	if (getcwd(temp_pathname, sizeof(temp_pathname)) != NULL) {
-		printf("before working directory: %s\n", temp_pathname);
-	} else {
-		printf("Error: %s\n", strerror(errno));
-	}
+	chdir(buffer);
 
-	chdir(homeDir);
-
-	if (getcwd(temp_pathname, sizeof(temp_pathname)) != NULL) {
-			printf("after working directory: %s\n", temp_pathname);
-		}
+//	if (getcwd(temp_pathname, sizeof(temp_pathname)) != NULL) {
+//			printf("after changing directory: %s\n", temp_pathname);
+//	}
 }
 
 // built in status command
