@@ -55,23 +55,24 @@ void print_status() {
  * Adapted from Module 7: Processes and I/O example code.
  */
 void other_commands(char* argv[]) {
-	pid_t spawnPID = fork(); // spawn child process
+	pid_t child_PID = fork(); // spawn child process
+	int child_status;
 
-	switch (spawnPID) {
+	switch (child_PID) {
 	case -1:
 		perror("fork() failed\n");
 		exit(1);
 		break;
 	case 0:
 		// child process
-		execvp(current_command->argv[0], current_command->argv);
+		execvp(current_command->argv[0], current_command->argv); // replace child with new program
 
 		// if execvp returns, error occurred
 		fprintf(stderr, "%s: command not found", current_command->argv[0]);
 		exit(1);
 	default:
 		// parent process
-		int child_status;
-		pid_t child_PID = waitpid(spawnPID, &child_status, 0);
+		pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
+
 	}
 }
