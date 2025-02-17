@@ -2,6 +2,9 @@
 #include "processes.h"
 #include "commands.h"
 
+// global variable
+int last_exit_status = 0;
+
 int main () {
 	struct user_command* current_command;
 
@@ -24,6 +27,10 @@ int main () {
 			change_directory(current_command->argv[1]);
 		}
 
+		if (strcmp(current_command->argv[0], "status") == 0) {
+			print_status();
+		}
+
 		free_command_memory(current_command);
 	}
 	return 0;
@@ -35,7 +42,7 @@ struct user_command* parse_command() {
 	struct user_command* current_command = (struct user_command*) calloc(1, sizeof(struct user_command));
 
 	// get user's command
-	printf(": ");
+	printf("\n: ");
 	fflush(stdout); // flush output to display prompt
 	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
 
@@ -90,5 +97,3 @@ void free_command_memory(struct user_command* command) {
     // free the user command struct
     free(command);
 }
-
-

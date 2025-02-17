@@ -13,9 +13,9 @@ void exit_program() {
  * Changes the working directory of the shell to the specified path.
  */
 void change_directory(char* pathname) {
-	// check if no arguments
 	char* buffer = pathname;
 
+	// check if no arguments
 	if (buffer == NULL) {
 		buffer = getenv("HOME"); // set to directory in HOME environment variable
 	}
@@ -35,5 +35,17 @@ void change_directory(char* pathname) {
 //	}
 }
 
-// built in status command
-//int print_status() {}
+/**
+ * Prints out either the exit status or the terminating signal of the last foreground process run by the shell.
+ */
+
+extern int last_exit_status; // from main.h
+
+void print_status() {
+	if (WIFEXITED(last_exit_status)) {
+		printf("exit value %d", WEXITSTATUS(last_exit_status));
+	} else {
+		printf("terminated by signal %d", WTERMSIG(last_exit_status));
+	}
+	fflush(stdout);
+}
