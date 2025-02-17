@@ -1,5 +1,6 @@
 #include "commands.h"
 #include "processes.h"
+#include "main.h"
 
 extern int last_exit_status; // from main.c
 
@@ -42,9 +43,9 @@ void change_directory(char* pathname) {
  */
 void print_status() {
 	// query child termination status
-	if (WIFEXITED(last_exit_status)) {
+	if (WIFEXITED(last_exit_status)) { // if process exited normally
 		printf("exit value %d", WEXITSTATUS(last_exit_status));
-	} else {
+	} else if (WIFSIGNALED(last_exit_status)) { // if process was signaled to exit
 		printf("terminated by signal %d", WTERMSIG(last_exit_status));
 	}
 	fflush(stdout);
@@ -54,25 +55,39 @@ void print_status() {
  * Handles execution of all commands that are not built in.
  * Adapted from Module 7: Processes and I/O example code.
  */
-void other_commands(char* argv[]) {
+void other_commands(struct user_command* current_command) {
 	pid_t child_PID = fork(); // spawn child process
 	int child_status;
 
+//	char* command = current_command->argv[0];
+//	char* command_array[MAX_ARGS +1] = current_command->argv;
+
 	switch (child_PID) {
-	case -1:
+	case -1: // check if forking failed
 		perror("fork() failed\n");
 		exit(1);
 		break;
-	case 0:
-		// child process
+
+	case 0: // child process
 		execvp(current_command->argv[0], current_command->argv); // replace child with new program
 
 		// if execvp returns, error occurred
 		fprintf(stderr, "%s: command not found", current_command->argv[0]);
 		exit(1);
-	default:
-		// parent process
+
+	default: // parent process
 		pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
+
+		if (terminated_child_PID == -1) { // check if waiting failed
+			perror("waitpid() failed");
+		}
+
+		// update last exit status
+		if (WIFEXITED(child_status)) { // if child exited normally
+			last_exit_status = WEXITSTATUS(child_status);
+		} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
+			last_exit_status = WTERMSIG(child_status);
+		}
 
 	}
 }

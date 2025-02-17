@@ -13,7 +13,7 @@ void free_command_memory(struct user_command* command);
 
 // structs
 struct user_command {
-	char* argv[MAX_ARGS +1]; // array holding arguments
+	char* argv[MAX_ARGS + 1]; // array holding arguments
 	int argc; // number of arguments
 	char* input_file;
 	char* output_file;

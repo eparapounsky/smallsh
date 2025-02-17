@@ -26,7 +26,7 @@ int main () {
 		} else if (strcmp(current_command->argv[0], "status") == 0) {
 			print_status();
 		} else {
-			other_commands(current_command->argv);
+			other_commands(current_command);
 		}
 
 		free_command_memory(current_command);
