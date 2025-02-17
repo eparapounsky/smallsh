@@ -5,6 +5,11 @@
 int last_exit_status = 0;
 struct user_command* current_command = NULL;
 
+
+/**
+ * Main entry point.
+ * Prompts the user in a loop for commands, and calls the appropriate handler function.
+ */
 int main () {
 	while (true) {
 		current_command = parse_command();
@@ -24,7 +29,7 @@ int main () {
 		} else if (strcmp(current_command->argv[0], "status") == 0) {
 			print_status();
 		} else {
-			other_commands(current_command);
+			other_commands(current_command); // handle all non-built in commands
 		}
 
 		free_command_memory(current_command);
@@ -32,7 +37,11 @@ int main () {
 	return 0;
 }
 
-// adapted from sample parser code
+/**
+ * Prompts the user for a command and then parses user input into a user_command struct.
+ * @return current_command: user_command struct, the current command to be executed
+ * Adapted from sample parser code.
+ */
 struct user_command* parse_command() {
 	char user_input[COMMAND_LINE_SIZE];
 	struct user_command* current_command = (struct user_command*) calloc(1, sizeof(struct user_command));
@@ -71,6 +80,10 @@ struct user_command* parse_command() {
 	return current_command;
 }
 
+/**
+ * Frees all dynamically allocated memory associated with the given user_command struct.
+ * @param command: user_command struct, the struct whose memory is to be freed
+ */
 void free_command_memory(struct user_command* command) {
     // check that command was created
 	if (!command) {
