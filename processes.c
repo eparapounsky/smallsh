@@ -6,7 +6,7 @@ int num_background_processes = 0;
 
 /**
  * Adds a process's PID to the tracking array
- * @param pid_t the process's PID
+ * @param pid: pid_t, the process's PID
  */
 void add_process(pid_t pid) {
 	if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {

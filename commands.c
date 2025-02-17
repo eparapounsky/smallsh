@@ -14,6 +14,7 @@ void exit_program() {
 
 /**
  * Changes the working directory of the shell to the specified path.
+ * @param string, the name of the directory to change to
  */
 void change_directory(char* pathname) {
 	char* buffer = pathname;
@@ -54,6 +55,7 @@ void print_status() {
 /**
  * Handles execution of all commands that are not built in.
  * Adapted from Module 7: Processes and I/O example code.
+ * @param
  */
 void other_commands(struct user_command* current_command) {
 	pid_t child_PID = fork(); // spawn child process
