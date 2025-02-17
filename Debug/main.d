@@ -1,4 +1,4 @@
-main.o: ../main.c ../main.h ../processes.h ../commands.h
+main.o: ../main.c ../main.h ../commands.h ../processes.h
 ../main.h:
-../processes.h:
 ../commands.h:
+../processes.h:

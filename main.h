@@ -2,6 +2,7 @@
 #include <string.h> // for strtok_r
 #include <stdbool.h> // for true/false
 #include <stdlib.h> // for calloc
+#include "commands.h"
 
 // macros
 #define COMMAND_LINE_SIZE 2048
@@ -20,4 +21,4 @@ struct user_command {
 	bool is_background_process;
 };
 
-struct user_command* current_command;
+extern struct user_command* current_command;

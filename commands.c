@@ -14,7 +14,7 @@ void exit_program() {
 
 /**
  * Changes the working directory of the shell to the specified path.
- * @param string, the name of the directory to change to
+ * @param pathname: string, the name of the directory to change to
  */
 void change_directory(char* pathname) {
 	char* buffer = pathname;
@@ -55,14 +55,14 @@ void print_status() {
 /**
  * Handles execution of all commands that are not built in.
  * Adapted from Module 7: Processes and I/O example code.
- * @param
+ * @param current_command: struct, the current command being executed
  */
 void other_commands(struct user_command* current_command) {
 	pid_t child_PID = fork(); // spawn child process
 	int child_status;
 
-//	char* command = current_command->argv[0];
-//	char* command_array[MAX_ARGS +1] = current_command->argv;
+	char* command = current_command->argv[0];
+	char** command_array = current_command->argv;
 
 	switch (child_PID) {
 	case -1: // check if forking failed
@@ -71,10 +71,10 @@ void other_commands(struct user_command* current_command) {
 		break;
 
 	case 0: // child process
-		execvp(current_command->argv[0], current_command->argv); // replace child with new program
+		execvp(command, command_array); // replace child with new program
 
 		// if execvp returns, error occurred
-		fprintf(stderr, "%s: command not found", current_command->argv[0]);
+		fprintf(stderr, "%s: command not found", command);
 		exit(1);
 
 	default: // parent process

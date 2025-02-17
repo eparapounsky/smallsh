@@ -2,8 +2,9 @@
 #include "processes.h"
 #include "commands.h"
 
-// global variable
+// global variables
 int last_exit_status = 0;
+struct user_command* current_command = NULL;
 
 int main () {
 //	struct user_command* current_command;
