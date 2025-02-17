@@ -1,14 +1,11 @@
 #include "main.h" // double quotes for local header files
 #include "processes.h"
-#include "commands.h"
 
 // global variables
 int last_exit_status = 0;
 struct user_command* current_command = NULL;
 
 int main () {
-//	struct user_command* current_command;
-
 	while (true) {
 		current_command = parse_command();
 

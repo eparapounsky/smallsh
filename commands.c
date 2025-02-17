@@ -71,9 +71,9 @@ void other_commands(struct user_command* current_command) {
 		break;
 
 	case 0: // child process
-		execvp(command, command_array); // replace child with new program
+		execvp(command, command_array); // replace child with new program (search in PATH variable)
 
-		// if execvp returns, error occurred
+		// if execvp returns, error occurred (shell did not find command to run)
 		fprintf(stderr, "%s: command not found", command);
 		exit(1);
 
@@ -92,4 +92,6 @@ void other_commands(struct user_command* current_command) {
 		}
 
 	}
+
+	_exit(0); // terminate child process
 }
