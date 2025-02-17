@@ -1,6 +1,8 @@
 #include "commands.h"
 #include "processes.h"
 
+extern int last_exit_status; // from main.c
+
 /**
  * Calls the termination function from processes.c and exits.
  */
@@ -38,14 +40,38 @@ void change_directory(char* pathname) {
 /**
  * Prints out either the exit status or the terminating signal of the last foreground process run by the shell.
  */
-
-extern int last_exit_status; // from main.h
-
 void print_status() {
+	// query child termination status
 	if (WIFEXITED(last_exit_status)) {
 		printf("exit value %d", WEXITSTATUS(last_exit_status));
 	} else {
 		printf("terminated by signal %d", WTERMSIG(last_exit_status));
 	}
 	fflush(stdout);
+}
+
+/**
+ * Handles execution of all commands that are not built in.
+ * Adapted from Module 7: Processes and I/O example code.
+ */
+void other_commands(char* argv[]) {
+	pid_t spawnPID = fork(); // spawn child process
+
+	switch (spawnPID) {
+	case -1:
+		perror("fork() failed\n");
+		exit(1);
+		break;
+	case 0:
+		// child process
+		execvp(current_command->argv[0], current_command->argv);
+
+		// if execvp returns, error occurred
+		fprintf(stderr, "%s: command not found", current_command->argv[0]);
+		exit(1);
+	default:
+		// parent process
+		int child_status;
+		pid_t child_PID = waitpid(spawnPID, &child_status, 0);
+	}
 }

@@ -19,3 +19,5 @@ struct user_command {
 	char* output_file;
 	bool is_background_process;
 };
+
+struct user_command* current_command;

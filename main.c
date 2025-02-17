@@ -6,7 +6,7 @@
 int last_exit_status = 0;
 
 int main () {
-	struct user_command* current_command;
+//	struct user_command* current_command;
 
 	while (true) {
 		current_command = parse_command();
@@ -21,14 +21,12 @@ int main () {
 		// handle built in commands
 		if (strcmp(current_command->argv[0], "exit") == 0) {
 			exit_program();
-		}
-
-		if (strcmp(current_command->argv[0], "cd") == 0) {
+		} else if (strcmp(current_command->argv[0], "cd") == 0) {
 			change_directory(current_command->argv[1]);
-		}
-
-		if (strcmp(current_command->argv[0], "status") == 0) {
+		} else if (strcmp(current_command->argv[0], "status") == 0) {
 			print_status();
+		} else {
+			other_commands(current_command->argv);
 		}
 
 		free_command_memory(current_command);

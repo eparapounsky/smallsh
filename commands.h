@@ -1,5 +1,5 @@
 #include <stdio.h> // for printf
-#include <unistd.h> // for chdir
+#include <unistd.h> // for chdir, fork, execvp
 #include <stdlib.h> // for getenv
 #include <errno.h> // for debugging
 #include <string.h> // for debugging
@@ -10,3 +10,4 @@
 void exit_program();
 void change_directory(char* pathname);
 void print_status();
+void other_commands();
