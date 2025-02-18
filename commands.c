@@ -82,7 +82,7 @@ void other_commands(struct user_command* current_command) {
 			}
 
 			// redirect stdin to input file
-			int result = dup2(input_file, 0); // 0 is fd for stdin
+			int result = dup2(input_file_fd, 0); // 0 is fd for stdin
 
 			if (result == -1) { // if redirection failed
 				perror("dup2");
@@ -101,7 +101,7 @@ void other_commands(struct user_command* current_command) {
 			}
 
 			// redirect stdout to output file
-			int result = dup2(output_file, 1); // 1 is fd for stdout
+			int result = dup2(output_file_fd, 1); // 1 is fd for stdout
 
 			if (result == -1) { // if redirection failed
 				perror("dup2");
