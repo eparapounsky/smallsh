@@ -91,7 +91,22 @@ void other_commands(struct user_command* current_command) {
 		}
 
 		// output redirection
-		if (current_command->output_file) {}
+		if (current_command->output_file) {
+			char* output_file = current_command->output_file;
+			int output_file_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644); // rw-r--r--
+
+			if (output_file_fd == -1) { // if opening the file failed
+				printf("cannot open %s for output", output_file);
+				exit(1);
+
+			// redirect stdout to output file
+			int result = dup2(output_file, 1); // 1 is fd for stdout
+
+			if (result == -1) { // if redirection failed
+				perror("dup2");
+				exit(2);
+			}
+		}
 
 		execvp(command, command_array); // replace child with new program (search in PATH variable)
 
