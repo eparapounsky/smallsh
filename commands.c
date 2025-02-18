@@ -99,6 +99,8 @@ void other_commands(struct user_command* current_command) {
 		fprintf(stderr, "%s: command not found", command);
 		exit(1);
 
+		_exit(0); // terminate child process
+
 	default: // parent process
 		pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
 
@@ -113,5 +115,5 @@ void other_commands(struct user_command* current_command) {
 			last_exit_status = WTERMSIG(child_status);
 		}
 	}
-	_exit(0); // terminate child process
+
 }
