@@ -98,6 +98,7 @@ void other_commands(struct user_command* current_command) {
 			if (output_file_fd == -1) { // if opening the file failed
 				printf("cannot open %s for output", output_file);
 				exit(1);
+			}
 
 			// redirect stdout to output file
 			int result = dup2(output_file, 1); // 1 is fd for stdout
