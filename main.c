@@ -5,7 +5,6 @@
 int last_exit_status = 0;
 struct user_command* current_command = NULL;
 
-
 /**
  * Main entry point.
  * Prompts the user in a loop for commands, and calls the appropriate handler function.

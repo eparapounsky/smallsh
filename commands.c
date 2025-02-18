@@ -55,7 +55,7 @@ void print_status() {
 /**
  * Handles execution of all commands that are not built in.
  * Adapted from Module 7: Processes and I/O example code.
- * @param current_command: struct, the current command being executed
+ * @param current_command: user_command struct, the current command being executed
  */
 void other_commands(struct user_command* current_command) {
 	pid_t child_PID = fork(); // spawn child process
@@ -71,6 +71,12 @@ void other_commands(struct user_command* current_command) {
 		break;
 
 	case 0: // child process
+		// input redirection
+		if (current_command->input_file) {}
+
+		// output redirection
+		if (current_command->output_file) {}
+
 		execvp(command, command_array); // replace child with new program (search in PATH variable)
 
 		// if execvp returns, error occurred (shell did not find command to run)
@@ -90,8 +96,6 @@ void other_commands(struct user_command* current_command) {
 		} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
 			last_exit_status = WTERMSIG(child_status);
 		}
-
 	}
-
 	_exit(0); // terminate child process
 }
