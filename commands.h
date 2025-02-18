@@ -4,6 +4,7 @@
 #include <errno.h> // for debugging
 #include <string.h> // for debugging
 #include <sys/wait.h> // for WIFEXITED, WIFSIGNALED, waitpid
+#include <fcntl.h> // for open
 
 
 // function prototypes

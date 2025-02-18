@@ -72,7 +72,23 @@ void other_commands(struct user_command* current_command) {
 
 	case 0: // child process
 		// input redirection
-		if (current_command->input_file) {}
+		if (current_command->input_file) {
+			char* input_file = current_command->input_file;
+			int input_file_fd = open(input_file, O_RDONLY);
+
+			if (input_file_fd == -1) { // if opening the file failed
+				printf("cannot open %s for input", input_file);
+				exit(1);
+			}
+
+			// redirect stdin to input file
+			int result = dup2(input_file, 0); // 0 is fd for stdin
+
+			if (result == -1) { // if redirection failed
+				perror("dup2");
+				exit(2);
+			}
+		}
 
 		// output redirection
 		if (current_command->output_file) {}
