@@ -88,6 +88,8 @@ void other_commands(struct user_command* current_command) {
 				perror("dup2");
 				exit(2);
 			}
+
+			close(input_file_fd);
 		}
 
 		// output redirection
@@ -107,6 +109,8 @@ void other_commands(struct user_command* current_command) {
 				perror("dup2");
 				exit(2);
 			}
+
+			close(output_file_fd);
 		}
 
 		execvp(command, command_array); // replace child with new program (search in PATH variable)
