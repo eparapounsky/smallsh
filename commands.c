@@ -122,10 +122,12 @@ void other_commands(struct user_command* current_command) {
 		_exit(0); // terminate child process
 
 	default: // parent process
-		pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
+		if (!current_command->is_background_process) { // if command runs in foreground
+			pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
 
-		if (terminated_child_PID == -1) { // check if waiting failed
-			perror("waitpid() failed");
+			if (terminated_child_PID == -1) { // check if waiting failed
+				perror("waitpid() failed");
+			}
 		}
 
 		// update last exit status
