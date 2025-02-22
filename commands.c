@@ -152,14 +152,16 @@ void other_commands(struct user_command* current_command) {
 			if (terminated_child_PID == -1) { // check if waiting failed
 				perror("waitpid() failed");
 			}
+
+			// update last exit status
+			if (WIFEXITED(child_status)) { // if child exited normally
+				last_exit_status = WEXITSTATUS(child_status);
+			} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
+				last_exit_status = WTERMSIG(child_status);
+			}
 		}
 
-		// update last exit status
-		if (WIFEXITED(child_status)) { // if child exited normally
-			last_exit_status = WEXITSTATUS(child_status);
-		} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
-			last_exit_status = WTERMSIG(child_status);
-		}
+
 	}
 
 }
