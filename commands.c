@@ -167,7 +167,7 @@ void other_commands(struct user_command* current_command) {
 				printf("background pid is %d", child_PID);
 				fflush(stdout);
 			} else {
-
+				fprintf(stderr, "Limit on background processes has been reached.\n");
 			}
 
 
