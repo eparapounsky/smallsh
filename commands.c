@@ -159,6 +159,18 @@ void other_commands(struct user_command* current_command) {
 			} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
 				last_exit_status = WTERMSIG(child_status);
 			}
+		} else { // if command runs in background
+			if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {
+				background_processes[num_background_processes] = child_PID; // add to array of non-completed background processes
+				num_background_processes++;
+
+				printf("background pid is %d", child_PID);
+				fflush(stdout);
+			} else {
+
+			}
+
+
 		}
 
 
