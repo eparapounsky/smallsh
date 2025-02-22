@@ -123,6 +123,18 @@ void other_commands(struct user_command* current_command) {
 			}
 
 			close(output_file_fd);
+		} else if (current_command->is_background_process) { // background process with no output redirection specified
+			int dev_null_fd = open("/dev/null", O_RDONLY);
+
+			// redirect stdout to /dev/null
+			int result = dup2(dev_null_fd, 1);
+
+			if (result == -1) { // if redirection failed
+				perror("dup2");
+				exit(2);
+			}
+
+			close(dev_null_fd);
 		}
 
 		execvp(command, command_array); // replace child with new program (search in PATH variable)
