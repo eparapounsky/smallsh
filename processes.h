@@ -1,7 +1,7 @@
 #include <sys/types.h> // for pid_t
 #include <stdio.h> // for printf
 #include <signal.h> // for signals
-#include <sys/wait.h> // for WIFEXITED, WIFSIGNALED, waitpid
+#include <sys/wait.h> // for WIFEXITED, WIFSIGNALED, WEXITSTATUS, WTERMSIG, waitpid
 
 // macros
 #define BACKGROUND_PROCESS_LIMIT 200
