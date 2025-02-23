@@ -163,6 +163,8 @@ void other_commands(struct user_command* current_command) {
 				last_exit_status = WEXITSTATUS(child_status);
 			} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
 				last_exit_status = WTERMSIG(child_status);
+				printf("terminated by signal %d", last_exit_status);
+				fflush(stdout);
 			}
 		} else { // if command runs in background
 			if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {
