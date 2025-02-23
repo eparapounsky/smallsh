@@ -171,7 +171,5 @@ void other_commands(struct user_command* current_command) {
 			}
 		}
 	}
-
 	check_background_processes();
-
 }
