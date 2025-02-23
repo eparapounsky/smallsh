@@ -42,10 +42,11 @@ void check_background_processes() {
 			printf("background pid %d is done: ", process_PID);
 
 			if (WIFEXITED(process_status)) { // if process exited normally
-							last_exit_status = WEXITSTATUS(process_status);
-						} else if (WIFSIGNALED(process_status)) { // if process was signaled to exit
-							last_exit_status = WTERMSIG(process_status);
-						}
+				printf("exit value %d\n", WEXITSTATUS(process_status));
+			} else if (WIFSIGNALED(process_status)) { // if process was signaled to exit
+				printf("terminated by signal %d\n", WTERMSIG(process_status));
+			}
+			fflush(stdout);
 		}
 	}
 }
