@@ -1,5 +1,6 @@
 #include "main.h" // double quotes for local header files
 #include "processes.h"
+#include "signals.h"
 
 // define global variables
 int last_exit_status = 0;
@@ -10,6 +11,8 @@ struct user_command* current_command = NULL;
  * Prompts the user in a loop for commands, and calls the appropriate handler function.
  */
 int main () {
+	register_signal_handlers(); // set up signal handling
+
 	while (true) {
 		current_command = parse_command();
 
