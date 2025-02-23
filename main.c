@@ -1,7 +1,7 @@
 #include "main.h" // double quotes for local header files
 #include "processes.h"
 
-// global variables
+// define global variables
 int last_exit_status = 0;
 struct user_command* current_command = NULL;
 
