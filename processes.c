@@ -35,7 +35,7 @@ void check_background_processes() {
 	pid_t process_PID;
 	int process_status;
 
-	for (int i = 0; i < num_background_processes; i++) {
+	for (int i = 0; i < num_background_processes;) {
 		process_PID = waitpid(background_processes[i], &process_status, WNOHANG);
 
 		if (process_PID > 0) { // if waitpid was successful
@@ -47,6 +47,15 @@ void check_background_processes() {
 				printf("terminated by signal %d\n", WTERMSIG(process_status));
 			}
 			fflush(stdout);
+
+			// replace terminated process PID with PID of the last non-complete process in the array
+			// this is necessary to avoid gaps in the array
+			num_background_processes--;
+			background_processes[i] = background_processes[num_background_processes];
+
+			// i is not incremented because the new element at index i needs to be checked
+		} else {
+			i++; // increment only if process was not complete
 		}
 	}
 }
