@@ -1,5 +1,6 @@
 #include "signals.h"
 
+
 /**
  * Signal handler for SIGINT (CTRL-C).
  * The parent process and any children running as background processes ignore SIGINT.
@@ -18,7 +19,7 @@ void register_signal_handlers() {
 	struct sigaction SIGINT_action = {0}; // initialize to be empty
 
 	// fill out the SIGINT_action struct
-	SIGINT_action->__sigaction_handler = handle_SIGINT; // register handle_SIGINT as the signal handler
+	SIGINT_action.sa_handler = handle_SIGINT; // register handle_SIGINT as the signal handler
 
 	sigaction(SIGINT, &SIGINT_action, NULL); // install signal handler
 }
