@@ -8,3 +8,4 @@
 // function prototypes
 void add_process(pid_t pid);
 void terminate_processes();
+void check_background_processes();
