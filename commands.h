@@ -1,5 +1,5 @@
 #include <stdio.h> // for printf
-#include <unistd.h> // for chdir, fork, execvp, dup2
+#include <unistd.h> // for chdir, fork, execvp, dup2, close
 #include <stdlib.h> // for getenv
 #include <errno.h> // for debugging
 #include <string.h> // for debugging
