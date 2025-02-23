@@ -169,11 +169,7 @@ void other_commands(struct user_command* current_command) {
 			} else {
 				fprintf(stderr, "Limit on background processes has been reached.\n");
 			}
-
-
 		}
-
-
 	}
 
 	check_background_processes();
