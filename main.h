@@ -21,4 +21,5 @@ struct user_command {
 	bool is_background_process;
 };
 
+// declare variables
 extern struct user_command* current_command;
