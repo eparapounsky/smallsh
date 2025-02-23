@@ -1,6 +1,7 @@
 #include "commands.h"
 #include "processes.h"
 #include "main.h"
+#include "signals.h"
 
 extern int last_exit_status; // from main.c
 
@@ -71,6 +72,10 @@ void other_commands(struct user_command* current_command) {
 		break;
 
 	case 0: // child process
+		if (current_command->is_background_process) {
+			register_signal_handlers(); // background processes ignore SIGINT
+		}
+
 		// input redirection
 		if (current_command->input_file) {
 			char* input_file = current_command->input_file;
