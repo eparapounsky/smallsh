@@ -6,3 +6,4 @@
 void handle_SIGINT (int signal_number);
 void handle_SIGSTP (int signal_number);
 void register_signal_handlers(bool is_background_process);
+int is_foreground_only_mode();

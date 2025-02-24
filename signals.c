@@ -56,3 +56,11 @@ void register_signal_handlers(bool is_background_process) {
 	sigaction(SIGINT, &SIGINT_action, NULL);
 	sigaction(SIGTSTP, &SIGTSTP_action, NULL);
 }
+
+/**
+ * Getter function for the foreground_commands_only global variable.
+ * @return
+ */
+int is_foreground_only_mode() {
+	return foreground_commands_only;
+}
