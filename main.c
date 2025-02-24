@@ -11,7 +11,7 @@ struct user_command* current_command = NULL;
  * Prompts the user in a loop for commands, and calls the appropriate handler function.
  */
 int main () {
-	register_child_signal_handlers(); // set up signal handling
+	register_parent_signal_handlers(); // set up signal handling
 
 	while (true) {
 		current_command = parse_command();
