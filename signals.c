@@ -4,17 +4,6 @@
 int foreground_commands_only = 0; // 0 = both foreground and background, 1 = only foreground
 
 /**
- * Signal handler for SIGINT (CTRL-C).
- * The parent process and any children running as background processes ignore SIGINT.
- * A child running as a foreground process terminates itself upon receiving SIGINT (default action).
- * @param signal_number: int, the integer code representing SIGINT
- * Adapted from Module 7: Signal Handling API code
- */
-void handle_SIGINT (int signal_number) {
-	// empty, because SIGINT is ignored
-}
-
-/**
  * Signal handler for SIGTSTP (CTRL-Z).
  * All child processes (background or foreground) ignore SIGTSTP.
  * SIGTSTP tells the parents process to enable or disable running commands in the foreground only.
