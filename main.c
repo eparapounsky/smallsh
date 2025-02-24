@@ -14,10 +14,11 @@ int main () {
 	register_parent_signal_handlers(); // set up signal handling
 
 	while (true) {
+		check_background_processes(); // print out finished background processes before taking more user input
+
 		current_command = parse_command();
 
 		if (!current_command) {
-			check_background_processes();
 			continue; // avoid attempting to process empty commands
 		}
 
