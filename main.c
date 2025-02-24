@@ -66,7 +66,8 @@ struct user_command* parse_command() {
 	// strtok_r returns NULL when there are no more tokens
 	while ((token = strtok_r(remainder, " \n", &remainder)) != NULL) {
 		if (strcmp(token, "#") == 0) { // if user entered a comment
-			return 0;
+			free(current_command);
+			return NULL;
 		} else if (strcmp(token, "<") == 0) { // if user specified input file
 			// dynamically allocate memory and save file name
 			current_command->input_file = strdup(strtok_r(remainder, " \n", &remainder));
