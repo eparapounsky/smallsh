@@ -49,6 +49,7 @@ void register_child_signal_handlers(bool is_background_process) {
 
 /**
  * Registers signal handlers for the parent shell.
+ * Adapted from Module 7: Signal Handling API code
  */
 void register_parent_signal_handlers() {
 	// initialize structs to be empty
