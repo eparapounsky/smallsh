@@ -63,6 +63,7 @@ void register_parent_signal_handlers() {
 	// parent process has a custom handler for SIGTSTP
 	SIGTSTP_action.sa_handler = handle_SIGTSTP;
 	sigfillset(&SIGTSTP_action.sa_mask); // block all catchable signals while handle_SIGTSTP runs
+	SIGTSTP_action.sa_flags = 0; // no flags set
 	sigaction(SIGTSTP, &SIGTSTP_action, NULL);
 }
 
