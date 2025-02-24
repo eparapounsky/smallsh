@@ -1,10 +1,10 @@
 #include "signals.h"
 
-// global variables
+// global variable to track foreground only mode
 int foreground_commands_only = 0;
 
 /**
- * Signal handler for SIGTSTP (CTRL-Z).
+ * Signal handler for SIGTSTP (CTRL-Z) in the parent shell.
  * SIGTSTP tells the parents process to enable or disable running commands in the foreground only.
  * @param signal_number: int, the integer code representing SIGTSTP
  */
@@ -67,7 +67,8 @@ void register_parent_signal_handlers() {
 
 /**
  * Getter function for the foreground_commands_only global variable.
- * @return foreground_commands_only: int, 0 if both foreground and background, 1 if only foreground
+ * @return foreground_commands_only: int, 0 if both foreground and background commands allowed,
+ * 1 if only foreground commands allowed
  */
 int is_foreground_only_mode() {
 	return foreground_commands_only;
