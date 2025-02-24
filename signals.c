@@ -34,7 +34,7 @@ void handle_SIGTSTP (int signal_number) {
  *
  * Adapted from Module 7: Signal Handling API code
  */
-void register_signal_handlers(bool is_background_process) {
+void register_child_signal_handlers(bool is_background_process) {
 	// initialize structs to be empty
 	struct sigaction SIGINT_action = {0};
 	struct sigaction SIGTSTP_action = {0};
