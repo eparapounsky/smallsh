@@ -72,9 +72,10 @@ void other_commands(struct user_command* current_command) {
 		break;
 
 	case 0: // child process
-		if (current_command->is_background_process) {
-			register_signal_handlers(); // background processes ignore SIGINT
-		}
+		// determine if the child should run in the background
+		bool is_background_process = current_command->is_background_process && !is_foreground_only_mode();
+
+		register_signal_handlers(is_background_process);
 
 		// input redirection
 		if (current_command->input_file) {
