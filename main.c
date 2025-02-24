@@ -20,12 +20,12 @@ int main () {
 			continue; // avoid attempting to process empty commands
 		}
 
-		// print argv for debugging
-		printf("\n current command arguments:\n");
-		for (int i = 0; current_command->argv[i] != NULL; i++) {
-		    printf("argv[%d]: %s\n", i, current_command->argv[i]);
-		}
-		fflush(stdout);
+//		// print argv for debugging
+//		printf("\n current command arguments:\n");
+//		for (int i = 0; current_command->argv[i] != NULL; i++) {
+//		    printf("argv[%d]: %s\n", i, current_command->argv[i]);
+//		}
+//		fflush(stdout);
 
 		// handle built in commands
 		if (strcmp(current_command->argv[0], "exit") == 0) {
