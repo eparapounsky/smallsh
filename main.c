@@ -16,6 +16,10 @@ int main () {
 	while (true) {
 		current_command = parse_command();
 
+		if (!current_command) {
+			continue; // avoid attempting to process empty commands
+		}
+
 		// print argv for debugging
 		printf("\n current command arguments:\n");
 		for (int i = 0; current_command->argv[i] != NULL; i++) {
