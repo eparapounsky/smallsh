@@ -55,7 +55,7 @@ struct user_command* parse_command() {
 
 	// check for blank lines
 	if (strlen(user_input) == 0) {
-		return 0;
+		return NULL;
 	}
 
 	// parse user's command
