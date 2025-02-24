@@ -57,8 +57,8 @@ struct user_command* parse_command() {
 	fflush(stdout); // flush output to display prompt
 	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
 
-	// check for blank lines
-	if (strlen(user_input) == 0) {
+	// check for blank lines and comments
+	if (strlen(user_input) == 0 || user_input[0] == '#') {
 		free(current_command);
 		return NULL;
 	}
@@ -69,19 +69,14 @@ struct user_command* parse_command() {
 
 	// strtok_r returns NULL when there are no more tokens
 	while ((token = strtok_r(remainder, " \n", &remainder)) != NULL) {
-		if (strcmp(token, "#") == 0) { // if user entered a comment
-			free(current_command);
-			return NULL;
-		} else if (strcmp(token, "<") == 0) { // if user specified input file
-			// dynamically allocate memory and save file name
-			current_command->input_file = strdup(strtok_r(remainder, " \n", &remainder));
+		 if (strcmp(token, "<") == 0) { // if user specified input file
+			current_command->input_file = strdup(strtok_r(remainder, " \n", &remainder)); // dynamically allocate memory and save file name
 		} else if (strcmp(token, ">") == 0) { // if user specified output file
 			current_command->output_file = strdup(strtok_r(remainder, " \n", &remainder));
 		} else if (strcmp(token, "&") == 0) { // if user specified to run process in background
 			current_command->is_background_process = true;
 		} else { // user specified an argument
-			// add argument to array and increment argument count
-			current_command->argv[current_command->argc++] = strdup(token);
+			current_command->argv[current_command->argc++] = strdup(token); // add argument to array and increment argument count
 		}
 	}
 
