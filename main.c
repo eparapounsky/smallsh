@@ -17,6 +17,7 @@ int main () {
 		current_command = parse_command();
 
 		if (!current_command) {
+			check_background_processes();
 			continue; // avoid attempting to process empty commands
 		}
 
