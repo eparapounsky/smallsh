@@ -1,6 +1,5 @@
 #include "signals.h"
 
-
 /**
  * Signal handler for SIGINT (CTRL-C).
  * The parent process and any children running as background processes ignore SIGINT.
@@ -8,8 +7,14 @@
  * @param signal_number: int, the integer code representing SIGINT
  * Adapted from Module 7: Signal Handling API code
  */
+void handle_SIGINT (int signal_number) {
+	// empty, because SIGINT is ignored
+}
 
-void handle_SIGINT (int signal_number) {}
+/**
+ *
+ */
+void handle_SIGSTP (int signal_number) {}
 
 /**
  *
