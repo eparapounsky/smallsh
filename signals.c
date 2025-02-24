@@ -1,5 +1,8 @@
 #include "signals.h"
 
+// global variables
+int foreground_commands_only = 0; // 0 = both foreground and background, 1 = only foreground
+
 /**
  * Signal handler for SIGINT (CTRL-C).
  * The parent process and any children running as background processes ignore SIGINT.
@@ -17,7 +20,15 @@ void handle_SIGINT (int signal_number) {
  * SIGTSTP tells the parents process to enable or disable running commands in the foreground only.
  * @param signal_number: int, the integer code representing SIGTSTP
  */
-void handle_SIGTSTP (int signal_number) {}
+void handle_SIGTSTP (int signal_number) {
+	if (foreground_commands_only) {
+		write(1, "Exiting foreground-only mode\n", 29); // 1 is fd for stdout
+		foreground_commands_only = 0;
+	} else {
+		write(1, "Entering foreground-only mode (& is now ignored)");
+		foreground_commands_only = 1;
+	}
+}
 
 /**
  *
