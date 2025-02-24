@@ -58,6 +58,24 @@ void register_child_signal_handlers(bool is_background_process) {
 }
 
 /**
+ *
+ */
+void register_parent_signal_handlers() {
+	// initialize structs to be empty
+	struct sigaction SIGINT_action = {0};
+	struct sigaction SIGTSTP_action = {0};
+
+	// parent process ignores SIGINT
+	SIGINT_action.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &SIGINT_action, NULL);
+
+	// parent process has a custom handler for SIGTSTP
+	SIGTSTP_action.sa_handler = handle_SIGTSTP;
+	sigfillset(&SIGTSTP_action.sa_mask); // block all catchable signals while handle_SIGTSTP runs
+	sigaction(SIGTSTP, &SIGTSTP_action, NULL);
+}
+
+/**
  * Getter function for the foreground_commands_only global variable.
  * @return
  */
