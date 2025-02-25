@@ -37,6 +37,11 @@ int main () {
 		} else if (strcmp(current_command->argv[0], "status") == 0) {
 			print_status();
 		} else {
+			// determine if command should be forced to run in foreground
+			if (is_foreground_only_mode()) {
+				current_command->is_background_process = false;
+			}
+
 			other_commands(current_command); // handle all non-built in commands
 		}
 

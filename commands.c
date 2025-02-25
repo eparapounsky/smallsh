@@ -46,9 +46,9 @@ void change_directory(char* pathname) {
 void print_status() {
 	// query child termination status
 	if (WIFEXITED(last_exit_status)) { // if process exited normally
-		printf("exit value %d", WEXITSTATUS(last_exit_status));
+		printf("\nexit value %d", WEXITSTATUS(last_exit_status));
 	} else if (WIFSIGNALED(last_exit_status)) { // if process was signaled to exit
-		printf("terminated by signal %d", WTERMSIG(last_exit_status));
+		printf("\nterminated by signal %d", WTERMSIG(last_exit_status));
 	}
 	fflush(stdout);
 }
@@ -83,7 +83,7 @@ void other_commands(struct user_command* current_command) {
 			int input_file_fd = open(input_file, O_RDONLY);
 
 			if (input_file_fd == -1) { // if opening the file failed
-				printf("cannot open %s for input", input_file);
+				printf("\ncannot open %s for input", input_file);
 				exit(1);
 			}
 
@@ -116,7 +116,7 @@ void other_commands(struct user_command* current_command) {
 			int output_file_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644); // rw-r--r--
 
 			if (output_file_fd == -1) { // if opening the file failed
-				printf("cannot open %s for output", output_file);
+				printf("\ncannot open %s for output", output_file);
 				exit(1);
 			}
 
@@ -147,7 +147,7 @@ void other_commands(struct user_command* current_command) {
 		int status = execvp(command, command_array); // replace child with new program (search in PATH variable)
 		if (status == -1) {
 			// if execvp returns, error occurred (shell did not find command to run)
-			fprintf(stderr, "%s: command not found", command);
+			fprintf(stderr, "\n%s: command not found", command);
 			exit(1);
 		}
 		_exit(0); // terminate child process
@@ -165,7 +165,7 @@ void other_commands(struct user_command* current_command) {
 				last_exit_status = WEXITSTATUS(child_status);
 			} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
 				last_exit_status = WTERMSIG(child_status);
-				printf("terminated by signal %d", last_exit_status);
+				printf("\nterminated by signal %d", last_exit_status);
 				fflush(stdout);
 			}
 		} else { // if command runs in background
@@ -173,10 +173,10 @@ void other_commands(struct user_command* current_command) {
 				background_processes[num_background_processes] = child_PID; // add to array of non-completed background processes
 				num_background_processes++;
 
-				printf("background pid is %d", child_PID);
+				printf("\nbackground pid is %d", child_PID);
 				fflush(stdout);
 			} else {
-				fprintf(stderr, "Limit on background processes has been reached.\n");
+				fprintf(stderr, "\nlimit on background processes has been reached.\n");
 			}
 		}
 	}

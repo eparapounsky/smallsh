@@ -13,7 +13,7 @@ void add_process(pid_t pid) {
 		background_processes[num_background_processes] = pid;
 		num_background_processes++;
 	} else {
-		printf("ERROR: Background process limit reached.");
+		printf("\nERROR: Background process limit reached.");
 		fflush(stdout);
 	}
 }
@@ -39,12 +39,12 @@ void check_background_processes() {
 		process_PID = waitpid(background_processes[i], &process_status, WNOHANG);
 
 		if (process_PID > 0) { // if waitpid was successful
-			printf("background pid %d is done: ", process_PID);
+			printf("\nbackground pid %d is done: ", process_PID);
 
 			if (WIFEXITED(process_status)) { // if process exited normally
-				printf("exit value %d\n", WEXITSTATUS(process_status));
+				printf("\nexit value %d\n", WEXITSTATUS(process_status));
 			} else if (WIFSIGNALED(process_status)) { // if process was signaled to exit
-				printf("terminated by signal %d\n", WTERMSIG(process_status));
+				printf("\nterminated by signal %d\n", WTERMSIG(process_status));
 			}
 			fflush(stdout);
 
