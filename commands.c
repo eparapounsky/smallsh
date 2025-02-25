@@ -144,12 +144,23 @@ void other_commands(struct user_command* current_command) {
 		}
 
 //		printf("executing: %s\n", command);
-		int status = execvp(command, command_array); // replace child with new program (search in PATH variable)
-		if (status == -1) {
-			// if execvp returns, error occurred (shell did not find command to run)
-			fprintf(stderr, "\n%s: command not found\n", command);
-			exit(1);
+
+		if (command != NULL && command_array != NULL) {
+			int status = execvp(command, command_array); // replace child with new program (search in PATH variable)
+
+			if (status == -1) { // if execvp returns, error occurred (shell did not find command to run)
+				fprintf(stderr, "\n%s: command not found\n", command);
+				exit(1);
+			}
 		}
+
+//		int status = execvp(command, command_array); // replace child with new program (search in PATH variable)
+//
+//		if (status == -1) {
+//			// if execvp returns, error occurred (shell did not find command to run)
+//			fprintf(stderr, "\n%s: command not found\n", command);
+//			exit(1);
+//		}
 		_exit(0); // terminate child process
 
 	default: // parent process
