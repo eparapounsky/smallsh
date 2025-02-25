@@ -6,7 +6,6 @@
 #include <sys/wait.h> // for WIFEXITED, WIFSIGNALED, waitpid
 #include <fcntl.h> // for open
 
-
 // function prototypes
 void exit_program();
 void change_directory(char* pathname);
