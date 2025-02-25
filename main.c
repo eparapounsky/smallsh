@@ -1,4 +1,4 @@
-#include "main.h" // double quotes for local header files
+#include "main.h"
 #include "processes.h"
 #include "signals.h"
 
@@ -22,13 +22,6 @@ int main () {
 			continue; // avoid attempting to process empty commands
 		}
 
-//		// print argv for debugging
-//		printf("\n current command arguments:\n");
-//		for (int i = 0; current_command->argv[i] != NULL; i++) {
-//		    printf("argv[%d]: %s\n", i, current_command->argv[i]);
-//		}
-//		fflush(stdout);
-
 		// handle built in commands
 		if (strcmp(current_command->argv[0], "exit") == 0) {
 			exit_program();
@@ -44,7 +37,6 @@ int main () {
 
 			other_commands(current_command); // handle all non-built in commands
 		}
-
 		free_command_memory(current_command);
 	}
 	return 0;
@@ -88,7 +80,6 @@ struct user_command* parse_command() {
 			}
 		}
 	}
-
 	return current_command;
 }
 
