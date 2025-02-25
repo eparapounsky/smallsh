@@ -64,8 +64,8 @@ struct user_command* parse_command() {
 	fflush(stdout); // flush output to display prompt
 	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
 
-	// check for blank lines and comments
-	if (strlen(user_input) == 0 || user_input[0] == '#') {
+	// check for blank lines, comments, and newlines
+	if (strlen(user_input) == 0 || user_input[0] == '#' || user_input[0] == '\n') {
 		free(current_command);
 		return NULL;
 	}
