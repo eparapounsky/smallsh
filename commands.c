@@ -25,19 +25,7 @@ void change_directory(char* pathname) {
 		buffer = getenv("HOME"); // set to directory in HOME environment variable
 	}
 
-//	char temp_pathname[512];
-//
-//	if (getcwd(temp_pathname, sizeof(temp_pathname)) != NULL) {
-//		printf("before changing directory: %s\n", temp_pathname);
-//	} else {
-//		printf("Error: %s\n", strerror(errno));
-//	}
-
 	chdir(buffer);
-
-//	if (getcwd(temp_pathname, sizeof(temp_pathname)) != NULL) {
-//			printf("after changing directory: %s\n", temp_pathname);
-//	}
 }
 
 /**
@@ -143,8 +131,6 @@ void other_commands(struct user_command* current_command) {
 			close(dev_null_fd);
 		}
 
-//		printf("executing: %s\n", command);
-
 		if (command != NULL && command_array != NULL) {
 			int status = execvp(command, command_array); // replace child with new program (search in PATH variable)
 
@@ -153,14 +139,6 @@ void other_commands(struct user_command* current_command) {
 				exit(1);
 			}
 		}
-
-//		int status = execvp(command, command_array); // replace child with new program (search in PATH variable)
-//
-//		if (status == -1) {
-//			// if execvp returns, error occurred (shell did not find command to run)
-//			fprintf(stderr, "\n%s: command not found\n", command);
-//			exit(1);
-//		}
 		_exit(0); // terminate child process
 
 	default: // parent process
