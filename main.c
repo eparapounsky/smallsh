@@ -51,11 +51,11 @@ int main () {
  * Adapted from sample parser code.
  */
 struct user_command* parse_command() {
-	char user_input[COMMAND_LINE_SIZE];
+	char user_input[COMMAND_LINE_SIZE] = "";
 	struct user_command* current_command = (struct user_command*) calloc(1, sizeof(struct user_command));
 
 	// get user's command
-	printf("\n: ");
+	printf(": ");
 	fflush(stdout); // flush output to display prompt
 	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
 
