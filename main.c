@@ -83,7 +83,9 @@ struct user_command* parse_command() {
 		} else if (strcmp(token, "&") == 0) { // if user specified to run process in background
 			current_command->is_background_process = true;
 		} else { // user specified an argument
-			current_command->argv[current_command->argc++] = strdup(token); // add argument to array and increment argument count
+			if (current_command->argc < MAX_ARGS) {
+				current_command->argv[current_command->argc++] = strdup(token); // add argument to array and increment argument count
+			}
 		}
 	}
 
