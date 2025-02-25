@@ -13,7 +13,7 @@ void add_process(pid_t pid) {
 		background_processes[num_background_processes] = pid;
 		num_background_processes++;
 	} else {
-		printf("\nERROR: Background process limit reached.\n");
+		printf("\nbackground process limit reached\n");
 		fflush(stdout);
 	}
 }
