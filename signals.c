@@ -10,10 +10,10 @@ int foreground_commands_only = 0;
  */
 void handle_SIGTSTP (int signal_number) {
 	if (foreground_commands_only) {
-		write(1, "Exiting foreground-only mode\n", 29); // 1 is fd for stdout
+		write(1, "\nExiting foreground-only mode\n", 30); // 1 is fd for stdout
 		foreground_commands_only = 0;
 	} else {
-		write(1, "Entering foreground-only mode (& is now ignored)\n", 49);
+		write(1, "\nEntering foreground-only mode (& is now ignored)\n", 50);
 		foreground_commands_only = 1;
 	}
 }
