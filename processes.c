@@ -9,15 +9,18 @@ pid_t background_processes[BACKGROUND_PROCESS_LIMIT]; // array holding PIDs of s
 int num_background_processes = 0;
 
 /**
- * Adds a process's PID to the tracking array.
+ * Adds a process's PID to the background process tracking array.
  * @param pid: pid_t, the process's PID
  */
-void add_process(pid_t pid) {
+void add_background_process(pid_t pid) {
 	if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {
-		background_processes[num_background_processes] = pid;
+		background_processes[num_background_processes] = pid; // add to array of non-completed background processes
 		num_background_processes++;
+
+		printf("\nbackground pid is %d\n", pid);
+		fflush(stdout);
 	} else {
-		printf("\nbackground process limit reached\n");
+		fprintf(stderr, "\nlimit on background processes has been reached.\n");
 		fflush(stdout);
 	}
 }
@@ -156,11 +159,13 @@ void handle_child_process(struct user_command* current_command) {
 /**
  *
  * @param current_command: user_command struct, the current command being executed
+ * @param child_PID: pid_t, the process ID of the child process
  */
 void handle_parent_process(struct user_command* current_command, pid_t child_PID) {
 	int child_status;
 
 	if (!current_command->is_background_process) { // if command runs in foreground
+		// wait for child to finish
 		pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
 
 		if (terminated_child_PID == -1) { // check if waiting failed
@@ -176,14 +181,6 @@ void handle_parent_process(struct user_command* current_command, pid_t child_PID
 			fflush(stdout);
 		}
 	} else { // if command runs in background
-		if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {
-			background_processes[num_background_processes] = child_PID; // add to array of non-completed background processes
-			num_background_processes++;
-
-			printf("\nbackground pid is %d\n", child_PID);
-			fflush(stdout);
-		} else {
-			fprintf(stderr, "\nlimit on background processes has been reached.\n");
-		}
+		add_background_process(child_PID);
 	}
 }
