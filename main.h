@@ -1,10 +1,10 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 #include <stdio.h> // for printf
 #include <string.h> // for strtok_r, strcmp
 #include <stdbool.h> // for true/false
 #include <stdlib.h> // for calloc
-#include "commands.h"
-#include "processes.h"
-#include "signals.h"
 
 // macros
 #define COMMAND_LINE_SIZE 2048
@@ -25,3 +25,5 @@ struct user_command {
 
 // declare global variable
 extern struct user_command* current_command;
+
+#endif // MAIN_H
