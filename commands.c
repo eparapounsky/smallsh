@@ -24,7 +24,6 @@ void change_directory(char* pathname) {
 	if (buffer == NULL) {
 		buffer = getenv("HOME"); // set to directory in HOME environment variable
 	}
-
 	chdir(buffer);
 }
 
@@ -62,5 +61,6 @@ void other_commands(struct user_command* current_command) {
 	default: // parent process
 		handle_parent_process(current_command, child_PID);
 	}
-	check_background_processes(); // check for any completed background processes before returning command prompt
+	// check for any completed background processes before returning command prompt
+	check_background_processes();
 }
