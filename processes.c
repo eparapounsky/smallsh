@@ -2,6 +2,8 @@
 #include "main.h"
 #include "signals.h"
 
+extern int last_exit_status; // from main.c
+
 // define global variables
 pid_t background_processes[BACKGROUND_PROCESS_LIMIT]; // array holding PIDs of still incomplete background processes
 int num_background_processes = 0;
@@ -64,6 +66,7 @@ void check_background_processes() {
 
 /**
  *
+ * @param current_command: user_command struct, the current command being executed
  */
 void handle_child_process(struct user_command* current_command) {
 	char* command = current_command->argv[0];
@@ -146,6 +149,41 @@ void handle_child_process(struct user_command* current_command) {
 		if (status == -1) { // if execvp returns, error occurred (shell did not find command to run)
 			fprintf(stderr, "\n%s: command not found\n", command);
 			exit(1);
+		}
+	}
+}
+
+/**
+ *
+ * @param current_command: user_command struct, the current command being executed
+ */
+void handle_parent_process(struct user_command* current_command, pid_t child_PID) {
+	int child_status;
+
+	if (!current_command->is_background_process) { // if command runs in foreground
+		pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
+
+		if (terminated_child_PID == -1) { // check if waiting failed
+			perror("waitpid() failed");
+		}
+
+		// update last exit status
+		if (WIFEXITED(child_status)) { // if child exited normally
+			last_exit_status = WEXITSTATUS(child_status);
+		} else if (WIFSIGNALED(child_status)) { // if child was signaled to exit
+			last_exit_status = WTERMSIG(child_status);
+			printf("\nterminated by signal %d\n", last_exit_status);
+			fflush(stdout);
+		}
+	} else { // if command runs in background
+		if (num_background_processes < BACKGROUND_PROCESS_LIMIT) {
+			background_processes[num_background_processes] = child_PID; // add to array of non-completed background processes
+			num_background_processes++;
+
+			printf("\nbackground pid is %d\n", child_PID);
+			fflush(stdout);
+		} else {
+			fprintf(stderr, "\nlimit on background processes has been reached.\n");
 		}
 	}
 }
