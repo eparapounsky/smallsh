@@ -69,7 +69,7 @@ void check_background_processes() {
 }
 
 /**
- *
+ * Handles the execution of a child process.
  * @param current_command: user_command struct, the current command being executed
  */
 void handle_child_process(struct user_command* current_command) {
@@ -97,7 +97,7 @@ void handle_child_process(struct user_command* current_command) {
 }
 
 /**
- *
+ * Handles the parent shell's responsibilities after spawning a child.
  * @param current_command: user_command struct, the current command being executed
  * @param child_PID: pid_t, the process ID of the child process
  */
