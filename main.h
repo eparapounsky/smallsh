@@ -2,7 +2,9 @@
 #include <string.h> // for strtok_r, strcmp
 #include <stdbool.h> // for true/false
 #include <stdlib.h> // for calloc
-#include "commands.h" // for command handling
+#include "commands.h"
+#include "processes.h"
+#include "signals.h"
 
 // macros
 #define COMMAND_LINE_SIZE 2048

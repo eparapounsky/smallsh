@@ -1,6 +1,4 @@
 #include "main.h"
-#include "processes.h"
-#include "signals.h"
 
 // define global variables
 int last_exit_status = 0;
