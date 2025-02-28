@@ -1,3 +1,6 @@
+#ifndef PROCESSES_H
+#define PROCESSES_H
+
 #include <sys/types.h> // for pid_t
 #include <stdio.h> // for printf
 #include <signal.h> // for signals
@@ -22,3 +25,5 @@ void handle_parent_process(struct user_command* current_command, pid_t child_PID
 // declare global variables
 extern pid_t background_processes[BACKGROUND_PROCESS_LIMIT];
 extern int num_background_processes;
+
+#endif // PROCESSES_H

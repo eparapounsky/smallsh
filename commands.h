@@ -1,3 +1,6 @@
+#ifndef COMMANDS_H
+#define COMMANDS_H
+
 #include <stdio.h> // for printf
 #include <unistd.h> // for chdir, fork, execvp, dup2, close
 #include <stdlib.h> // for getenv
@@ -11,3 +14,5 @@ void exit_program();
 void change_directory(char* pathname);
 void print_status();
 void other_commands();
+
+#endif // COMMANDS_H
