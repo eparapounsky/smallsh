@@ -16,7 +16,7 @@
 #define BACKGROUND_PROCESS_LIMIT 200
 
 // function prototypes
-void add_process(pid_t pid);
+void add_background_process(pid_t pid);
 void terminate_processes();
 void check_background_processes();
 void handle_child_process(struct user_command* current_command);
