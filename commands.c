@@ -60,7 +60,7 @@ void other_commands(struct user_command* current_command) {
 		_exit(0); // terminate child process
 
 	default: // parent process
-		handle_parent_process(current_command);
+		handle_parent_process(current_command, child_PID);
 	}
 	check_background_processes(); // check for any completed background processes before returning command prompt
 }
