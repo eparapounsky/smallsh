@@ -17,7 +17,7 @@
 
 // function prototypes
 void add_background_process(pid_t pid);
-void terminate_processes();
+void terminate_all_processes();
 void check_background_processes();
 void handle_child_process(struct user_command* current_command);
 void handle_parent_process(struct user_command* current_command, pid_t child_PID);

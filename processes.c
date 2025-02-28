@@ -29,7 +29,7 @@ void add_background_process(pid_t pid) {
 /**
  * Terminates all background processes.
  */
-void terminate_processes() {
+void terminate_all_processes() {
 	for (int i = 0; i < num_background_processes; i++) {
 		kill(background_processes[i], SIGTERM);
 	}

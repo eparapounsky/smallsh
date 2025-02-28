@@ -9,7 +9,7 @@ extern int last_exit_status; // from main.c
  * Calls the termination function from processes.c and exits.
  */
 void exit_program() {
-	terminate_processes();
+	terminate_all_processes();
 	exit(0);
 }
 
