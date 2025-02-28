@@ -7,18 +7,21 @@ C_SRCS += \
 ../commands.c \
 ../main.c \
 ../processes.c \
+../redirection.c \
 ../signals.c 
 
 C_DEPS += \
 ./commands.d \
 ./main.d \
 ./processes.d \
+./redirection.d \
 ./signals.d 
 
 OBJS += \
 ./commands.o \
 ./main.o \
 ./processes.o \
+./redirection.o \
 ./signals.o 
 
 
@@ -34,7 +37,7 @@ OBJS += \
 clean: clean--2e-
 
 clean--2e-:
-	-$(RM) ./commands.d ./commands.o ./main.d ./main.o ./processes.d ./processes.o ./signals.d ./signals.o
+	-$(RM) ./commands.d ./commands.o ./main.d ./main.o ./processes.d ./processes.o ./redirection.d ./redirection.o ./signals.d ./signals.o
 
 .PHONY: clean--2e-
 
