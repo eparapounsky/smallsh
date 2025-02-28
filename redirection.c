@@ -2,7 +2,9 @@
 #include "main.h"
 
 /**
- *
+ * Handles input redirection for a child process.
+ * Redirects input to a specified file if given.
+ * If a process has no specified input file, and runs in the background, input is redirected to /dev/null.
  * @param current_command: user_command struct, the current command being executed
  */
 void handle_input_redirection(struct user_command* current_command) {
@@ -41,7 +43,9 @@ void handle_input_redirection(struct user_command* current_command) {
 }
 
 /**
- *
+ * Handles output redirection for a child process.
+ * Redirects output to a specified file if given.
+ * If a process has no specified output file, and runs in the background, output is redirected to /dev/null.
  * @param current_command: user_command struct, the current command being executed
  */
 void handle_output_redirection(struct user_command* current_command) {
