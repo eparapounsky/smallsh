@@ -11,6 +11,7 @@
 #define MAX_ARGS 512
 
 // function prototypes
+char* get_command();
 struct user_command* parse_command();
 void free_command_memory(struct user_command* command);
 
