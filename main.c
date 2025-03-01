@@ -35,7 +35,6 @@ int main () {
 			if (is_foreground_only_mode()) {
 				current_command->is_background_process = false;
 			}
-
 			other_commands(current_command); // handle all non-built in commands
 		}
 		free_command_memory(current_command);
@@ -44,21 +43,32 @@ int main () {
 }
 
 /**
- * Prompts the user for a command and then parses user input into a user_command struct.
+ * Prompts the user for a command.
+ * @return user_input: string, the command entered by the user
+ * Adapted from sample parser code.
+ */
+char* get_command() {
+	char* user_input = malloc(COMMAND_LINE_SIZE);
+
+	printf(": ");
+	fflush(stdout);
+	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
+
+	return user_input;
+}
+
+/**
+ * Parses user input into a user_command struct.
  * @return current_command: user_command struct, the current command to be executed
  * Adapted from sample parser code.
  */
 struct user_command* parse_command() {
-	char user_input[COMMAND_LINE_SIZE] = "";
+	char* user_input = get_command();
 	struct user_command* current_command = (struct user_command*) calloc(1, sizeof(struct user_command));
-
-	// get user's command
-	printf(": ");
-	fflush(stdout); // flush output to display prompt
-	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
 
 	// check for blank lines, comments, and newlines
 	if (strlen(user_input) == 0 || user_input[0] == '#' || user_input[0] == '\n') {
+		free(user_input);
 		free(current_command);
 		return NULL;
 	}
@@ -81,6 +91,7 @@ struct user_command* parse_command() {
 			}
 		}
 	}
+	free(user_input);
 	return current_command;
 }
 
