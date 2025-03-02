@@ -104,7 +104,7 @@ void handle_child_process(struct user_command* current_command) {
 void handle_parent_process(struct user_command* current_command, pid_t child_PID) {
 	int child_status;
 
-	if (!current_command->is_background_process) { // if command runs in foreground
+	if (!current_command->is_background_process) { // if child runs in foreground
 		// wait for child to finish
 		pid_t terminated_child_PID = waitpid(child_PID, &child_status, 0); // get PID of terminated child
 
@@ -120,7 +120,7 @@ void handle_parent_process(struct user_command* current_command, pid_t child_PID
 			printf("\nterminated by signal %d\n", last_exit_status);
 			fflush(stdout);
 		}
-	} else { // if command runs in background
+	} else { // if child runs in background
 		add_background_process(child_PID);
 	}
 }
