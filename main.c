@@ -91,7 +91,7 @@ struct user_command* parse_command() {
 	// strtok_r returns NULL when there are no more tokens
 	while ((token = strtok_r(remainder, " \n", &remainder)) != NULL) {
 		 if (strcmp(token, "<") == 0) { // if user specified input file
-			current_command->input_file = strdup(strtok_r(remainder, " \n", &remainder)); // dynamically allocate memory and save file name
+			current_command->input_file = strdup(strtok_r(remainder, " \n", &remainder)); // dynamically allocate memory and save file name (next token)
 		} else if (strcmp(token, ">") == 0) { // if user specified output file
 			current_command->output_file = strdup(strtok_r(remainder, " \n", &remainder));
 		} else if (strcmp(token, "&") == 0) { // if user specified to run process in background
