@@ -50,6 +50,11 @@ int main () {
 char* get_command() {
 	char* user_input = malloc(COMMAND_LINE_SIZE);
 
+	if (!user_input) {
+		perror("memory allocation failed");
+	    exit(1); // shell cannot continue
+	}
+
 	printf(": ");
 	fflush(stdout);
 	fgets(user_input, COMMAND_LINE_SIZE, stdin); // read from standard input
@@ -65,6 +70,12 @@ char* get_command() {
 struct user_command* parse_command() {
 	char* user_input = get_command();
 	struct user_command* current_command = (struct user_command*) calloc(1, sizeof(struct user_command));
+
+	if (!current_command) {
+	    perror("memory allocation failed");
+	    free(user_input);
+	    return NULL;
+	}
 
 	// check for blank lines, comments, and newlines
 	if (strlen(user_input) == 0 || user_input[0] == '#' || user_input[0] == '\n') {
