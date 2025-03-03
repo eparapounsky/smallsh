@@ -3,7 +3,7 @@ Smallsh is a Unix shell that supports built-in and external commands, handles in
 
 ### To compile smallsh, run the following command: 
   gcc main.c commands.c processes.c redirection.c signals.c -o smallsh
-#### Then, start the shell by running: 
+### Then, start the shell by running: 
   ./smallsh
 
 Some example commands:
