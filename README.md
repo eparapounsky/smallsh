@@ -1,10 +1,21 @@
 # smallsh
-Smallsh is a Unix shell that supports built-in and external commands, handles input and output redirection, and manages foreground and background processes.
+smallsh is a custom Unix shell implemented in C, designed to mimic the core functionality of shells like bash. 
 
-### To compile smallsh, run the following command: 
-  gcc main.c commands.c processes.c redirection.c signals.c -o smallsh
-### Then, start the shell by running: 
-  ./smallsh
+## Features
+- Supports built-in commands: `cd`, `status`, and `exit`
+- Executes external programs with arguments
+- Handles foreground and background processes (`&`)
+- Implements input `<` and output `>` redirection
+- Tracks and reports exit status or terminating signal
+- Ignores and handles signals (SIGINT/SIGTSTP) appropriately
+
+## Build Instructions
+```chmod +x build.sh```
+
+```./build.sh```
+
+## Usage
+```./smallsh```
 
 Some example commands:
 ```
