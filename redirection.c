@@ -21,7 +21,6 @@ void handle_input_redirection(struct user_command* current_command) {
 		// redirect stdin to input file
 		int result = dup2(input_file_fd, STDIN_FILENO);
 
-
 		if (result == -1) {
 			perror("dup2");
 			exit(2);
