@@ -45,7 +45,6 @@ int main () {
 /**
  * Prompts the user for a command.
  * @return user_input: string, the command entered by the user
- * Adapted from sample parser code.
  */
 char* get_command() {
 	char* user_input = malloc(COMMAND_LINE_SIZE);
@@ -65,7 +64,6 @@ char* get_command() {
 /**
  * Parses user input into a user_command struct.
  * @return current_command: user_command struct, the current command to be executed
- * Adapted from sample parser code.
  */
 struct user_command* parse_command() {
 	char* user_input = get_command();
