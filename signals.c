@@ -22,7 +22,6 @@ void handle_SIGTSTP (int signal_number) {
  * Registers signal handlers for child processes based on whether they are
  * running in the foreground or background.
  * @param is_background_process: bool, indicates whether the process is a background process
- * Adapted from Module 7: Signal Handling API code
  */
 void register_child_signal_handlers(bool is_background_process) {
 	// initialize structs to be empty
@@ -49,7 +48,6 @@ void register_child_signal_handlers(bool is_background_process) {
 
 /**
  * Registers signal handlers for the parent shell.
- * Adapted from Module 7: Signal Handling API code
  */
 void register_parent_signal_handlers() {
 	// initialize structs to be empty
