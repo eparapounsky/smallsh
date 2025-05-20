@@ -42,7 +42,6 @@ void print_status() {
 
 /**
  * Handles execution of all commands that are not built in.
- * Adapted from Module 7: Processes and I/O example code.
  * @param current_command: user_command struct, the current command being executed
  */
 void other_commands(struct user_command* current_command) {
