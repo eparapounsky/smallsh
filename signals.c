@@ -8,11 +8,15 @@ bool foreground_commands_only = false;
  * SIGTSTP tells the parents process to enable or disable running commands in the foreground only.
  * @param signal_number: int, the integer code representing SIGTSTP
  */
-void handle_SIGTSTP (int signal_number) {
-	if (foreground_commands_only) {
+void handle_SIGTSTP(int signal_number)
+{
+	if (foreground_commands_only)
+	{
 		write(STDOUT_FILENO, "\nExiting foreground-only mode\n", 30);
 		foreground_commands_only = false;
-	} else {
+	}
+	else
+	{
 		write(STDOUT_FILENO, "\nEntering foreground-only mode (& is now ignored)\n", 50);
 		foreground_commands_only = true;
 	}
@@ -23,17 +27,21 @@ void handle_SIGTSTP (int signal_number) {
  * running in the foreground or background.
  * @param is_background_process: bool, indicates whether the process is a background process
  */
-void register_child_signal_handlers(bool is_background_process) {
+void register_child_signal_handlers(bool is_background_process)
+{
 	// initialize structs to be empty
 	struct sigaction SIGINT_action = {0};
 	struct sigaction SIGTSTP_action = {0};
 
-	if (is_background_process) {
+	if (is_background_process)
+	{
 		// background processes ignore both SIGINT and SIGTSTP
 		// register SIG_IGN (ignore signal) as signal handler for both signals
 		SIGINT_action.sa_handler = SIG_IGN;
 		SIGTSTP_action.sa_handler = SIG_IGN;
-	} else {
+	}
+	else
+	{
 		// foreground processes ignore SIGTSTP, but should terminate themselves upon receiving SIGINT (default action)
 		// register SIG_DFL (default action) as signal handler for SIGINT
 		SIGINT_action.sa_handler = SIG_DFL;
@@ -49,7 +57,8 @@ void register_child_signal_handlers(bool is_background_process) {
 /**
  * Registers signal handlers for the parent shell.
  */
-void register_parent_signal_handlers() {
+void register_parent_signal_handlers()
+{
 	// initialize structs to be empty
 	struct sigaction SIGINT_action = {0};
 	struct sigaction SIGTSTP_action = {0};
@@ -61,7 +70,7 @@ void register_parent_signal_handlers() {
 	// parent process has a custom handler for SIGTSTP
 	SIGTSTP_action.sa_handler = handle_SIGTSTP;
 	sigfillset(&SIGTSTP_action.sa_mask); // block all catchable signals while handle_SIGTSTP runs
-	SIGTSTP_action.sa_flags = 0; // no flags set
+	SIGTSTP_action.sa_flags = 0;		 // no flags set
 	sigaction(SIGTSTP, &SIGTSTP_action, NULL);
 }
 
@@ -70,6 +79,7 @@ void register_parent_signal_handlers() {
  * @return foreground_commands_only: bool, false if both foreground and background commands allowed,
  * true if only foreground commands allowed
  */
-bool is_foreground_only_mode() {
+bool is_foreground_only_mode()
+{
 	return foreground_commands_only;
 }
