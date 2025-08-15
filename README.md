@@ -1,6 +1,9 @@
 # smallsh
 smallsh is a custom Unix shell implemented in C, designed to mimic the core functionality of shells like bash. 
 
+## Download Available
+Download the shell [here](https://github.com/eparapounsky/smallsh/releases) (Linux only)
+
 ## Features
 - Supports built-in commands: `cd`, `status`, and `exit`
 - Executes external programs with arguments
