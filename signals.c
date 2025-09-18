@@ -1,4 +1,5 @@
 #include "signals.h"
+#include <sys/wait.h> // for waitpid
 
 // global variable to track foreground only mode
 bool foreground_commands_only = false;
@@ -19,6 +20,23 @@ void handle_SIGTSTP(int signal_number)
 	{
 		write(STDOUT_FILENO, "\nEntering foreground-only mode (& is now ignored)\n", 50);
 		foreground_commands_only = true;
+	}
+}
+
+/**
+ * Signal handler for SIGCHLD in the parent shell.
+ * Reaps terminated child processes to prevent zombie processes.
+ * @param signal_number: int, the integer code representing SIGCHLD
+ */
+void handle_SIGCHLD(int signal_number)
+{
+	pid_t child_pid;
+	int status;
+
+	// reap all available zombie children
+	while ((child_pid = waitpid(-1, &status, WNOHANG)) > 0)
+	{
+		// every iteration reaps one zombie child process
 	}
 }
 
@@ -62,6 +80,7 @@ void register_parent_signal_handlers()
 	// initialize structs to be empty
 	struct sigaction SIGINT_action = {0};
 	struct sigaction SIGTSTP_action = {0};
+	struct sigaction SIGCHLD_action = {0};
 
 	// parent process ignores SIGINT
 	SIGINT_action.sa_handler = SIG_IGN;
@@ -72,6 +91,12 @@ void register_parent_signal_handlers()
 	sigfillset(&SIGTSTP_action.sa_mask); // block all catchable signals while handle_SIGTSTP runs
 	SIGTSTP_action.sa_flags = 0;		 // no flags set
 	sigaction(SIGTSTP, &SIGTSTP_action, NULL);
+
+	// parent process has a custom handler for SIGCHLD to reap zombie processes
+	SIGCHLD_action.sa_handler = handle_SIGCHLD;
+	sigemptyset(&SIGCHLD_action.sa_mask); // don't block other signals while handle_SIGCHLD runs
+	SIGCHLD_action.sa_flags = SA_RESTART; // restart interrupted system calls
+	sigaction(SIGCHLD, &SIGCHLD_action, NULL);
 }
 
 /**
