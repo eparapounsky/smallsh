@@ -13,7 +13,7 @@ void handle_SIGTSTP(int signal_number)
 {
 	if (foreground_commands_only)
 	{
-		write(STDOUT_FILENO, "\nExiting foreground-only mode\n", 30);
+		write(STDOUT_FILENO, "\nExiting foreground-only mode\n", 30); // write is async-signal-safe
 		foreground_commands_only = false;
 	}
 	else
